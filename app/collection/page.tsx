@@ -14,10 +14,10 @@ export default function Home() {
                         <PanelRightClose className="m-0 size-8" />
                     </button>
                 ) : (
-                    <SideBar sideOpen={sideOpen} setSideOpen={setSideOpen} />
+                    <SideBar  sideOpen={sideOpen} setSideOpen={setSideOpen} />
                 )}
             </div>
-            <div>
+            <div className="w-full">
                 <Navbar />
                 <div className="">Hello</div>
             </div>
