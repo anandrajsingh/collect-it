@@ -10,6 +10,8 @@ import { useState, useTransition } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { signup } from "@/actions/signup"
+import { FormSuccess } from "../form-success"
+import { FormError } from "../form-error"
 
 export const SignupForm = () => {
 
@@ -94,6 +96,8 @@ export const SignupForm = () => {
                                 }
                             />
                         </div>
+                        <FormSuccess message={success}/>
+                        <FormError message={error}/>
                         <Button type="submit" disabled={isPending} className="w-full">
                             Sign Up
                         </Button>
