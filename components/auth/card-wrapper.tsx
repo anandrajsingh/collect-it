@@ -3,7 +3,9 @@ import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
 import { Button } from "@/components/ui/button"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
+import { signIn } from 'next-auth/react'
 import Link from "next/link"
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 
 interface CardWrapperProps {
     children: React.ReactNode,
@@ -22,7 +24,9 @@ export const CardWrapper = ({
 }: CardWrapperProps) => {
 
     const onClick = (provider: "google" | "github") => {
-
+        signIn(provider, {
+            callbackUrl: DEFAULT_LOGIN_REDIRECT
+        })
     }
     return (
         <Card className="w-[400px] shadow-md">
