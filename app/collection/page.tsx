@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react";
-import Navbar from "../components/section/Navbar";
-import SideBar from "../components/section/Sidebar";
+import Navbar from "@/components/section/Navbar";
+import SideBar from "@/components/section/Sidebar";
 import { PanelRightClose } from "lucide-react";
 
 export default function Home() {
