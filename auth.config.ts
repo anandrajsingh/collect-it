@@ -4,7 +4,7 @@ import Credentials from "next-auth/providers/credentials"
 import { LoginSchema } from "./schemas";
 import { getUserByEmail } from "./data/user";
 import bcrypt from "bcryptjs"
-import { NextAuthConfig } from "next-auth";
+import { NextAuthConfig, User } from "next-auth";
 
 export default {
     providers: [
@@ -17,19 +17,29 @@ export default {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
         }),
         Credentials({
-            async authorize(credentials){
-                const validatedFields = LoginSchema.safeParse(credentials)
+            async authorize(credentials: Partial<Record<string, unknown>>) {
+                const validatedFields = LoginSchema.safeParse(credentials);
+
                 if (validatedFields.success) {
                     const { email, password } = validatedFields.data;
+                    const user = await getUserByEmail(email);
 
-                    const user = await getUserByEmail(email)
                     if (!user || !user.password) return null;
 
                     const correctPassword = await bcrypt.compare(password, user.password)
-                    if (!correctPassword) return Response.json({ message: "Password did not match" })
+                    if (!correctPassword) return null
 
-                    return user
+                    if (user) {
+                        const result: User = {
+                            id: user.id,
+                            name: user.name,
+                            email: user.email,
+                            image: user.image || null,
+                        };
+                        return result;
+                    }
                 }
+                return null;
             }
         })
     ]
