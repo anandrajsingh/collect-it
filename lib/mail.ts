@@ -1,7 +1,7 @@
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-
+const nextUrl = process.env.NEXT_APP_URL
 
 if (!process.env.RESEND_API_EMAIL) {
     throw new Error('RESEND_API_EMAIL is not set')
@@ -10,7 +10,7 @@ if (!process.env.RESEND_API_EMAIL) {
 const resendMail = process.env.RESEND_API_EMAIL
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-    const confirmationLink = `http://localhost:3000/new-verification?token=${token}`
+    const confirmationLink = `${nextUrl}/new-verification?token=${token}`
 
     await resend.emails.send({
         from: resendMail,
@@ -21,7 +21,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 }
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-    const confirmationLink = `http://localhost:3000/new-password?token=${token}`
+    const confirmationLink = `${nextUrl}/new-password?token=${token}`
 
     await resend.emails.send({
         from: resendMail,
