@@ -1,11 +1,12 @@
-"use client"
-import { useState } from "react";
 
-export default function Home() {
+
+
+
+export default function Settings() {
     return (
         <div className="flex">    
             <div className="w-full">
-                <div className="">Hello</div>
+                <div className="">Settings</div>
             </div>
         </div>
     )
