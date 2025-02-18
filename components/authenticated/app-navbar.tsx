@@ -1,8 +1,8 @@
 "use client"
 
 import { logOut } from "@/actions/logout"
-import { Button } from "./ui/button"
-import { SidebarTrigger } from "./ui/sidebar"
+import { Button } from "@/components/ui/button"
+import { SidebarTrigger } from "@/components/ui/sidebar"
 
 export function AppNavBar({ children }: { children: React.ReactNode }) {
     const onClick = () => {
