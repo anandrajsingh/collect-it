@@ -1,5 +1,5 @@
 interface CardWrapperProps {
-    description: String,
+    description: string,
     title: string,
     links: string,
     creator: string

@@ -95,8 +95,8 @@ export default function Home() {
                 </Button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
-                {collections.map((collection) => (
-                    <CardWrapper title={collection.title} description={collection.description} links={collection.links} creator={collection.creator}/>
+                {collections.map((collection, index) => (
+                    <CardWrapper key={index} title={collection.title} description={collection.description} links={collection.links} creator={collection.creator}/>
                 ))}
             </div>
             
