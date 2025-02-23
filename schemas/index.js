@@ -32,3 +32,9 @@ export const NewPasswordSchema = z.object({
         message: "Minimum of 6 characters"
     })
 })
+
+export const CollectionSchema = z.object({
+    title: z.string(),
+    description: z.string(),
+    isPublic: z.boolean()
+})

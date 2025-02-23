@@ -1,3 +1,6 @@
+"use client"
+import { addCollection } from "@/actions/(authenticated)/add-collection";
+import { auth } from "@/auth";
 import { CardWrapper } from "@/components/authenticated/card-wrapper";
 import { Button } from "@/components/ui/button";
 
@@ -84,13 +87,17 @@ const collections = [
 ]
 
 export default function Home() {
+
+    const onClick =async() =>{
+        addCollection({title: "firset", description: "test", isPublic: true})
+    }
     return (
         <div className="flex flex-col p-4 px-12">
             <div className="flex justify-between">
                 <div className="text-4xl font-semibold">
                     My Collection
                 </div>
-                <Button >
+                <Button onClick={onClick}>
                     Add Collection
                 </Button>
             </div>
