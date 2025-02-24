@@ -1,8 +1,8 @@
 "use client"
-import { addCollection } from "@/actions/(authenticated)/add-collection";
-import { auth } from "@/auth";
+import { AddCollectionModal } from "@/components/authenticated/add-collection-modal";
 import { CardWrapper } from "@/components/authenticated/card-wrapper";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 
 const collections = [
@@ -88,16 +88,17 @@ const collections = [
 
 export default function Home() {
 
-    const onClick =async() =>{
-        addCollection({title: "firset", description: "test", isPublic: true})
-    }
+    const [modalOpen, setModalOpen] = useState(false);
+
     return (
-        <div className="flex flex-col p-4 px-12">
+        <div>
+            <AddCollectionModal open={modalOpen} onClose={() => { setModalOpen(false)}}/>
+            <div className="flex flex-col p-4 px-12">
             <div className="flex justify-between">
                 <div className="text-4xl font-semibold">
                     My Collection
                 </div>
-                <Button onClick={onClick}>
+                <Button onClick={() => { setModalOpen(true)}}>
                     Add Collection
                 </Button>
             </div>
@@ -107,6 +108,7 @@ export default function Home() {
                 ))}
             </div>
             
+        </div>
         </div>
     )
 }

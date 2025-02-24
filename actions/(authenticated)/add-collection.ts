@@ -25,4 +25,8 @@ export const addCollection = async(values: z.infer<typeof CollectionSchema>) => 
             isPublic
         }
     })
+
+    // console.log(collection)
+
+    return { success: "Collection added successfully"}
 }
