@@ -9,7 +9,7 @@ import { CardWrapper } from "./card-wrapper"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
-import { reset } from "@/actions/reset"
+import { reset } from "@/actions/(auth)/reset"
 import { FormError } from "../form-error"
 import { FormSuccess } from "../form-success"
 
@@ -30,10 +30,10 @@ export const ResetForm = () => {
     const onSubmit = (values: z.infer<typeof ResetSchema>) => {
         startTransition(() => {
             reset(values)
-            .then((data) => {
-                setError(data.error)
-                setSuccess(data.success)
-            })
+                .then((data) => {
+                    setError(data.error)
+                    setSuccess(data.success)
+                })
         })
     }
 

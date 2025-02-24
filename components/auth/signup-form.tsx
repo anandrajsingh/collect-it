@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { useState, useTransition } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { signup } from "@/actions/signup"
+import { signup } from "@/actions/(auth)/signup"
 import { FormSuccess } from "../form-success"
 import { FormError } from "../form-error"
 

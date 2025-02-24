@@ -10,7 +10,7 @@ import { NewPasswordSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
-import { newPassword } from "@/actions/new-password"
+import { newPassword } from "@/actions/(auth)/new-password"
 import { FormError } from "../form-error"
 import { FormSuccess } from "../form-success"
 
@@ -21,7 +21,7 @@ export const NewPasswordForm = () => {
 
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("")
-    
+
     const [isPending, startTransition] = useTransition()
 
     const form = useForm<z.infer<typeof NewPasswordSchema>>({
@@ -32,7 +32,7 @@ export const NewPasswordForm = () => {
     })
 
     const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
-        
+
         startTransition(() => {
             newPassword(values, token)
                 .then((data) => {
@@ -58,7 +58,7 @@ export const NewPasswordForm = () => {
                                             <FormControl>
                                                 <Input {...field} disabled={isPending} placeholder="******" type="password" />
                                             </FormControl>
-                                            <FormMessage/>
+                                            <FormMessage />
                                         </FormItem>
                                     )}
                             />
