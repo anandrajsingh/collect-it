@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
 type Collection = {
+    id: string,
     title: string;
     description: string;
     links: number[];
@@ -45,7 +46,7 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">           
                 {collections.map((collection, index) => (
-                    <CardWrapper key={index} title={collection.title} description={collection.description} links={collection.links} isPublic={collection.isPublic}/>
+                    <CardWrapper key={index} id={collection.id} title={collection.title} description={collection.description} links={collection.links} isPublic={collection.isPublic}/>
                 ))}
             </div>
             
