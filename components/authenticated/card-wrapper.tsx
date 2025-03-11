@@ -1,15 +1,15 @@
 interface CardWrapperProps {
     description: string,
     title: string,
-    links: string,
-    creator: string
+    links: number[],
+    isPublic: boolean
 }
 
 export const CardWrapper = ({
     description,
     title,
     links,
-    creator
+    isPublic
 }: CardWrapperProps) => {
     return (
         <div className="h-[200px] w-[300px] rounded-lg border border-slate-200 bg-white">
@@ -19,11 +19,11 @@ export const CardWrapper = ({
             <div className="p-3">
                 <div className="flex justify-between text-sm font-semibold ">
                     <span className="text-gray-900">{title}</span>
-                    <span className="text-gray-500">{links} Links</span>
+                    <span className="text-gray-500">{links?.length || 0} Links</span>
                 </div>
 
                 <div className="mt-2 text-xs font-medium w-fit bg-gray-200 px-2 py-1 text-gray-900 rounded-md">
-                    {creator}
+                    {isPublic ? "Public": "Private"}
                 </div>
             </div>
         </div>

@@ -2,14 +2,13 @@
 import { AddCollectionModal } from "@/components/authenticated/add-collection-modal";
 import { CardWrapper } from "@/components/authenticated/card-wrapper";
 import { Button } from "@/components/ui/button";
-import { CollectionSchema } from "@/schemas";
 import { useEffect, useState } from "react";
 
 type Collection = {
     title: string;
     description: string;
-    links: string;
-    creator: string;
+    links: number[];
+    isPublic: boolean;
 };
 
 export default function Home() {
@@ -44,9 +43,9 @@ export default function Home() {
                     Add Collection
                 </Button>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">           
                 {collections.map((collection, index) => (
-                    <CardWrapper key={index} title={collection.title} description={collection.description} links={collection.links} creator={collection.creator}/>
+                    <CardWrapper key={index} title={collection.title} description={collection.description} links={collection.links} isPublic={collection.isPublic}/>
                 ))}
             </div>
             
