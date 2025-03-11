@@ -1,9 +1,9 @@
 import { db } from "@/lib/db";
 
-export const getCollectionByUserId = async(id:string) => {
+export const getCollectionByUserId = async(userId:string) => {
     try {
         const collection = await db.collection.findMany({
-            where: {id}
+            where: {userId}
         })
         return collection;
     } catch (error) {

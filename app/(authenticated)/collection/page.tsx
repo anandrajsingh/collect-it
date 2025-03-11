@@ -2,93 +2,35 @@
 import { AddCollectionModal } from "@/components/authenticated/add-collection-modal";
 import { CardWrapper } from "@/components/authenticated/card-wrapper";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { CollectionSchema } from "@/schemas";
+import { useEffect, useState } from "react";
 
-
-const collections = [
-    {
-        title: "test",
-        description: "description",
-        links: "45",
-        creator: "Ayush"
-    },
-    {
-        title: "test",
-        description: "description",
-        links: "45",
-        creator: "Ayush"
-    },
-    {
-        title: "test",
-        description: "description",
-        links: "45",
-        creator: "Ayush"
-    },
-    {
-        title: "test",
-        description: "description",
-        links: "45",
-        creator: "Ayush"
-    },
-    {
-        title: "funny",
-        description: "follow",
-        links: "54",
-        creator: "Anand"
-    },
-    {
-        title: "funny",
-        description: "follow",
-        links: "54",
-        creator: "Anand"
-    },
-    {
-        title: "funny",
-        description: "follow",
-        links: "54",
-        creator: "Anand"
-    },
-    {
-        title: "funny",
-        description: "follow",
-        links: "54",
-        creator: "Anand"
-    },
-    {
-        title: "third",
-        description: "mtal",
-        links: "88",
-        creator: "Raj"
-    },
-    {
-        title: "third",
-        description: "mtal",
-        links: "88",
-        creator: "Raj"
-    },
-    {
-        title: "third",
-        description: "mtal",
-        links: "88",
-        creator: "Raj"
-    },
-    {
-        title: "third",
-        description: "mtal",
-        links: "88",
-        creator: "Raj"
-    },
-    {
-        title: "third",
-        description: "mtal",
-        links: "88",
-        creator: "Raj"
-    },
-]
+type Collection = {
+    title: string;
+    description: string;
+    links: string;
+    creator: string;
+};
 
 export default function Home() {
 
     const [modalOpen, setModalOpen] = useState(false);
+    const [ collections, setCollections ] = useState<Collection[]>([])
+
+    useEffect(() => {
+        async function fetchCollections() {
+            try {
+                const res = await fetch("/api/collections");
+                if (!res.ok) throw new Error("Failed to fetch collections");
+                const data = await res.json();
+                setCollections(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchCollections();
+    }, []);
+
 
     return (
         <div>
