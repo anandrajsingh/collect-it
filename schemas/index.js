@@ -38,3 +38,9 @@ export const CollectionSchema = z.object({
     description: z.string(),
     isPublic: z.boolean()
 })
+
+export const LinkSchema = z.object({
+    collectionId: z.string(),
+    title: z.string(),
+    url: z.string()
+})
