@@ -1,7 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation"
 
-interface CardWrapperProps {
+interface CollectionCardWrapperProps {
     id: string,
     description: string,
     title: string,
@@ -9,13 +9,13 @@ interface CardWrapperProps {
     isPublic: boolean
 }
 
-export const CardWrapper = ({
+export const CollectionCardWrapper = ({
     id,
     description,
     title,
     links,
     isPublic
-}: CardWrapperProps) => {
+}: CollectionCardWrapperProps) => {
     const router = useRouter()
 
     const handleClick =() => {
