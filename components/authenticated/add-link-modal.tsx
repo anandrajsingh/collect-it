@@ -45,13 +45,19 @@ export function AddLinkModal({ id, open, onClose }: AddLinkProps) {
             .catch(() => setError("Something went wrong"))
     }
 
+    const handleCloseButton = () => {
+        onClose()
+        setError("")
+        setSuccess("")
+    }
+
     return (
         <div>
             {open && <div>
                 <div className="w-screen h-screen bg-black fixed top-0 left-0 opacity-70" />
                 <div className="fixed top-0 left-0 w-screen h-screen flex flex-col justify-center items-center">
                     <div className="bg-white p-4 rounded-lg relative">
-                        <div className="cursor-pointer" onClick={onClose}>
+                        <div className="cursor-pointer" onClick={handleCloseButton}>
                             <Cross1Icon />
                         </div>
                         <div>
