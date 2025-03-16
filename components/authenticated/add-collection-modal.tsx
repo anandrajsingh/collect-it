@@ -1,6 +1,6 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
-import { addCollection } from "@/actions/(authenticated)/add-collection";
+import { addCollection } from "@/actions/(authenticated)/collection";
 import { CollectionSchema } from "@/schemas";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";

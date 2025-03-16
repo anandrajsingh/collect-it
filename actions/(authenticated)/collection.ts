@@ -2,6 +2,7 @@
 import { auth } from "@/auth"
 import { db } from "@/lib/db"
 import { CollectionSchema } from "@/schemas"
+import { error } from "console"
 import { z } from "zod"
 
 export const addCollection = async(values: z.infer<typeof CollectionSchema>) => {
@@ -29,4 +30,17 @@ export const addCollection = async(values: z.infer<typeof CollectionSchema>) => 
     // console.log(collection)
 
     return { success: "Collection added successfully"}
+}
+
+export const deleteCollection = async(id: string) => {
+    const session = await auth()
+    if(!session || !session.user?.id){
+        return { error: "Unauthroized"};
+    }
+    console.log("Reached here")
+    const deleted = await db.collection.delete({
+        where: { id }
+    });
+
+    return { success: "Collection deleted Successfully"}
 }

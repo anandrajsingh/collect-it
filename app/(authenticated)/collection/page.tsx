@@ -4,7 +4,7 @@ import { CollectionCardWrapper } from "@/components/authenticated/collection-car
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
-type Collection = {
+export type CollectionType = {
     id: string,
     title: string;
     description: string;
@@ -15,7 +15,7 @@ type Collection = {
 export default function Home() {
 
     const [modalOpen, setModalOpen] = useState(false);
-    const [collections, setCollections] = useState<Collection[]>([])
+    const [collections, setCollections] = useState<CollectionType[]>([])
 
     useEffect(() => {
         async function fetchCollections() {
