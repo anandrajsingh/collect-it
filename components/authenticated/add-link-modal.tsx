@@ -1,4 +1,4 @@
-import { addLink } from "@/actions/(authenticated)/add-link"
+import { addLink } from "@/actions/(authenticated)/link"
 import { LinkSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Cross1Icon } from "@radix-ui/react-icons"
