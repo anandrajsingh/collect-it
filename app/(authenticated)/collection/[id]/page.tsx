@@ -6,11 +6,7 @@ import { Pencil, Plus, Trash2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { CollectionType } from "../page"
 import { AddCollectionModal } from "@/components/authenticated/add-collection-modal"
-import { Cross1Icon } from "@radix-ui/react-icons"
-import { deleteCollection } from "@/actions/(authenticated)/collection"
-import { FormError } from "@/components/form-error"
-import { FormSuccess } from "@/components/form-success"
-import { useRouter } from "next/navigation"
+import { DeleteItem } from "@/components/authenticated/delete-item"
 
 interface CollectionProps {
     params: { id: string }
@@ -21,56 +17,7 @@ type Link = {
     url: string
 }
 
-interface DeleteLinkProps {
-    id: string,
-    name?: string,
-    open: boolean,
-    onClose: () => void
-}
-function DeleteCollection({ id, name, open, onClose }: DeleteLinkProps) {
 
-    const [error, setError] = useState<string | undefined>("");
-    const [success, setSuccess] = useState<string | undefined>("")
-
-    const router = useRouter()
-
-    function handleDelete() {
-        deleteCollection(id)
-            .then((data) => {
-                if (data?.error) {
-                    setError(data.error)
-                }
-                if (data?.success) {
-                    setSuccess(data.success)
-                    router.push("/collection")
-                }
-            })
-            .catch(() => setError("Something went wrong"))
-
-            
-    }
-    return (
-        <div>
-            {open &&
-                <div>
-                    <div className="w-screen h-screen bg-black fixed top-0 left-0 opacity-70" />
-                    <div className="fixed top-0 left-0 w-screen h-screen flex flex-col justify-center items-center">
-                        <div className="bg-white p-4 rounded-lg relative flex flex-col">
-                            <div className="cursor-pointer flex items-end justify-end" onClick={onClose}>
-                                <Cross1Icon />
-                            </div>
-                            <div>
-                                <h2 className="text-lg font-semibold mb-4">Delete collection name {name}</h2>
-                            </div>
-                            <Button className="flex mx-auto items-center justify-center" onClick={handleDelete}>Yes</Button>
-                        <FormError message={error} />
-                        <FormSuccess message={success} />
-                        </div>
-                    </div>
-                </div>}
-        </div>
-    )
-}
 
 export default function Collection({ params }: CollectionProps) {
 
@@ -91,7 +38,6 @@ export default function Collection({ params }: CollectionProps) {
                 if (!res.ok) throw new Error("Failed to fetch Links");
                 const data = await res.json();
                 setCollection(data)
-                console.log(data)
                 setLinks(data.links)
             } catch (error) {
                 console.error(error)
@@ -104,7 +50,7 @@ export default function Collection({ params }: CollectionProps) {
         <div>
             <AddLinkModal id={params.id} open={linkModalOpen} onClose={() => { setLinkModalOpen(false) }} />
             <AddCollectionModal open={collectionModalOpen} onClose={() => { setCollectionModalOpen(false) }} />
-            <DeleteCollection id={params.id} name={collection?.title} open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false) }} />
+            <DeleteItem id={params.id} name={collection?.title} open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false) }} />
             <div className="flex flex-col p-4 px-12">
                 <div className="flex justify-between">
 
