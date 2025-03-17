@@ -1,6 +1,6 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
-import { addCollection } from "@/actions/(authenticated)/collection";
+import { addCollection, editCollection } from "@/actions/(authenticated)/collection";
 import { CollectionSchema } from "@/schemas";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,16 +8,19 @@ import { useForm } from "react-hook-form";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Switch } from "../ui/switch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
+import { CollectionType } from "@/app/(authenticated)/collection/page";
 
 interface AddCollectionProps {
+    editMode: boolean,
+    collection?: CollectionType,
     open: boolean,
     onClose: () => void;
 }
 
-export function AddCollectionModal({ open, onClose }: AddCollectionProps) {
+export function AddCollectionModal({ editMode, collection, open, onClose }: AddCollectionProps) {
 
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("")
@@ -31,19 +34,44 @@ export function AddCollectionModal({ open, onClose }: AddCollectionProps) {
         }
     })
 
-    function onSubmit(values: z.infer<typeof CollectionSchema>) {
-        addCollection(values)
-            .then((data) => {
-                if (data?.error) {
-                    form.reset()
-                    setError(data.error)
-                }
-                if (data?.success) {
-                    form.reset()
-                    setSuccess(data.success)
-                }
+    useEffect(() => {
+        if (editMode && collection) {
+            form.reset({
+                title: collection?.title,
+                description: collection?.description,
+                isPublic: collection?.isPublic
             })
-            .catch(() => setError("Something went wrong"))
+        }
+    }, [editMode, collection, form])
+
+    function onSubmit(values: z.infer<typeof CollectionSchema>) {
+        if (editMode && collection) {
+            editCollection(collection.id, values)
+                .then((data) => {
+                    if (data?.error) {
+                        form.reset()
+                        setError(data.error)
+                    }
+                    if (data?.success) {
+                        form.reset()
+                        setSuccess(data.success)
+                    }
+                })
+                .catch(() => setError("Something went wrong"))
+        } else {
+            addCollection(values)
+                .then((data) => {
+                    if (data?.error) {
+                        form.reset()
+                        setError(data.error)
+                    }
+                    if (data?.success) {
+                        form.reset()
+                        setSuccess(data.success)
+                    }
+                })
+                .catch(() => setError("Something went wrong"))
+        }
     }
 
     const handleCloseButton = () => {
@@ -118,7 +146,7 @@ export function AddCollectionModal({ open, onClose }: AddCollectionProps) {
                                     </div>
                                     <FormError message={error} />
                                     <FormSuccess message={success} />
-                                    <Button type="submit">Submit</Button>
+                                    <Button type="submit">{editMode ? "Update" : "Submit"}</Button>
                                 </form>
                             </Form>
                         </div>

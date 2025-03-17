@@ -34,7 +34,7 @@ export default function Home() {
 
     return (
         <div>
-            <AddCollectionModal open={modalOpen} onClose={() => { setModalOpen(false) }} />
+            <AddCollectionModal editMode={false} open={modalOpen} onClose={() => { setModalOpen(false) }} />
             <div className="flex flex-col p-4 px-12">
                 <div className="flex justify-between">
                     <div className="text-4xl font-semibold">

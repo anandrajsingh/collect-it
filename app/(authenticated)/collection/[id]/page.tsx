@@ -17,8 +17,6 @@ type Link = {
     url: string
 }
 
-
-
 export default function Collection({ params }: CollectionProps) {
 
     const [linkModalOpen, setLinkModalOpen] = useState(false);
@@ -49,7 +47,7 @@ export default function Collection({ params }: CollectionProps) {
     return (
         <div>
             <AddLinkModal id={params.id} open={linkModalOpen} onClose={() => { setLinkModalOpen(false) }} />
-            <AddCollectionModal open={collectionModalOpen} onClose={() => { setCollectionModalOpen(false) }} />
+            <AddCollectionModal editMode={true} collection={collection} open={collectionModalOpen} onClose={() => { setCollectionModalOpen(false) }} />
             <DeleteItem id={params.id} name={collection?.title} open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false) }} />
             <div className="flex flex-col p-4 px-12">
                 <div className="flex justify-between">

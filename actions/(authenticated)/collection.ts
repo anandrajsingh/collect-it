@@ -27,9 +27,31 @@ export const addCollection = async(values: z.infer<typeof CollectionSchema>) => 
         }
     })
 
-    // console.log(collection)
-
     return { success: "Collection added successfully"}
+}
+
+export const editCollection = async(id: string, values: z.infer<typeof CollectionSchema>) => {
+    const validatedFields = CollectionSchema.safeParse(values)
+
+    const session = await auth()
+    if (!session || !session.user?.id) {
+        return { error: 'Unauthorized' };
+      }
+
+    if(!validatedFields.success) return { error: "Invalid Fields"}
+
+    const { title, description, isPublic} = validatedFields.data;
+
+    const updatedCollection = await db.collection.update({
+        where: {id},
+        data: {
+            title,
+            description,
+            isPublic
+        }
+    })
+
+    return { success: "Collection Updated successfully"}
 }
 
 export const deleteCollection = async(id: string) => {
