@@ -2,7 +2,6 @@
 import { auth } from "@/auth"
 import { db } from "@/lib/db"
 import { CollectionSchema } from "@/schemas"
-import { error } from "console"
 import { z } from "zod"
 
 export const addCollection = async(values: z.infer<typeof CollectionSchema>) => {
