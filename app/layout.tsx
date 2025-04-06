@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Script from "next/script";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,6 +29,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#FEFAE0]`}
       >
+              <Script
+                defer
+                data-project-id="cm958gu920001jx7cr83hoziu"
+                src="https://uptime.anandrajsingh.xyz/tracking.js"
+              />
         {children}
       </body>
     </html>
