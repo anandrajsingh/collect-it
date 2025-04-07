@@ -8,11 +8,12 @@ import { Button } from "../ui/button"
 
 interface DeleteItemProps {
     id: string,
+    itemType: "link" | "collection",
     name?: string,
     open: boolean,
     onClose: () => void
 }
-export function DeleteItem({ id, name, open, onClose }: DeleteItemProps) {
+export function DeleteItem({ id,itemType, name, open, onClose }: DeleteItemProps) {
 
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("")
@@ -20,7 +21,10 @@ export function DeleteItem({ id, name, open, onClose }: DeleteItemProps) {
     const router = useRouter()
 
     function handleDelete() {
-        deleteCollection(id)
+        if(itemType==="link"){
+            
+        }else{
+            deleteCollection(id)
             .then((data) => {
                 if (data?.error) {
                     setError(data.error)
@@ -30,7 +34,8 @@ export function DeleteItem({ id, name, open, onClose }: DeleteItemProps) {
                     router.push("/collection")
                 }
             })
-            .catch(() => setError("Something went wrong"))        
+            .catch(() => setError("Something went wrong")) 
+        }    
     }
     
     return (
@@ -44,7 +49,7 @@ export function DeleteItem({ id, name, open, onClose }: DeleteItemProps) {
                                 <Cross1Icon />
                             </div>
                             <div>
-                                <h2 className="text-lg font-semibold mb-4">Delete collection name {name}</h2>
+                                <h2 className="text-lg font-semibold mb-4">Delete {itemType} name {name}</h2>
                             </div>
                             <Button className="flex mx-auto items-center justify-center" onClick={handleDelete}>Yes</Button>
                         <FormError message={error} />

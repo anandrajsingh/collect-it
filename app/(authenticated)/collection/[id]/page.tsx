@@ -13,6 +13,7 @@ interface CollectionProps {
 }
 
 type Link = {
+    id: string,
     title: string,
     url: string
 }
@@ -48,7 +49,7 @@ export default function Collection({ params }: CollectionProps) {
         <div>
             <AddLinkModal id={params.id} open={linkModalOpen} onClose={() => { setLinkModalOpen(false) }} />
             <AddCollectionModal editMode={true} collection={collection} open={collectionModalOpen} onClose={() => { setCollectionModalOpen(false) }} />
-            <DeleteItem id={params.id} name={collection?.title} open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false) }} />
+            <DeleteItem id={params.id} itemType="collection" name={collection?.title} open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false) }} />
             <div className="flex flex-col p-4 px-12">
                 <div className="flex justify-between">
 
@@ -87,7 +88,7 @@ export default function Collection({ params }: CollectionProps) {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
                     {links.map((link, index) => (
-                        <LinkCardWrapper key={index} title={link.title} url={link.url} />
+                        <LinkCardWrapper key={index} id={link.id} title={link.title} url={link.url} />
                     ))}
                 </div>
 

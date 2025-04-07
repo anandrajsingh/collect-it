@@ -14,10 +14,10 @@ export default function Home() {
           <div className="font-bold text-xl sm:text-2xl tracking-tight">Collect It</div>
         </Link>
         <nav className="ml-auto  md:flex gap-8 hidden">
-          <Link className="font-medium hover:underline underline-offset-4" href="#">
+          <Link className="font-medium hover:underline underline-offset-4" href="#features">
             Features
           </Link>
-          <Link className="font-medium hover:underline underline-offset-4" href="">
+          <Link className="font-medium hover:underline underline-offset-4" href="#pricing">
             Pricing
           </Link>
         </nav>
@@ -93,7 +93,7 @@ export default function Home() {
         <section id="pricing" className="w-full py-24 bg-black text-white text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-6">Simple, Transparent Pricing</h2>
           <p className="text-gray-400 max-w-xl mx-auto mb-12">
-            Start for free. Upgrade only when you're ready to power up.
+            Start for free. Upgrade only when you are ready to power up.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
             <Card className="bg-white text-black border-2 border-purple-600">
