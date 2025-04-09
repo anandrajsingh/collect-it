@@ -31,7 +31,7 @@ export default function RootLayout({
       >
               <Script
                 defer
-                data-project-id="cm958gu920001jx7cr83hoziu"
+                data-project-id="cm99whj1t0001jx2jir89t6js"
                 src="https://uptime.anandrajsingh.xyz/tracking.js"
               />
         {children}
