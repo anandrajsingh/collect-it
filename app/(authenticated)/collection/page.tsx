@@ -6,7 +6,7 @@ import { AddCollectionClientWrapper } from "./AddCollectionClientWrapper";
 export type CollectionType = {
     id: string,
     title: string;
-    description: string;
+    description: string | null;
     links: { id: string; title: string; collectionId: string; url: string; note: string | null }[];
     isPublic: boolean;
 };

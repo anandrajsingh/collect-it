@@ -14,6 +14,10 @@ export default async function Collection({ params }: CollectionProps) {
         include: { links: true }
     })
 
+    if (!collection) {
+        return <div className="p-12">Collection not found</div>;
+      }
+
     const links = collection?.links
 
     return (

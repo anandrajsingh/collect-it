@@ -38,7 +38,7 @@ export function AddCollectionModal({ editMode, collection, open, onClose }: AddC
         if (editMode && collection) {
             form.reset({
                 title: collection?.title,
-                description: collection?.description,
+                description: collection?.description ?? undefined,
                 isPublic: collection?.isPublic
             })
         }
