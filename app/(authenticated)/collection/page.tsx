@@ -1,54 +1,47 @@
-"use client"
-import { AddCollectionModal } from "@/components/authenticated/add-collection-modal";
+import { auth } from "@/auth";
 import { CollectionCardWrapper } from "@/components/authenticated/collection-card-wrapper";
-import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { db } from "@/lib/db";
+import { AddCollectionClientWrapper } from "./AddCollectionClientWrapper";
 
 export type CollectionType = {
     id: string,
     title: string;
     description: string;
-    links: number[];
+    links: { id: string; title: string; collectionId: string; url: string; note: string | null }[];
     isPublic: boolean;
 };
 
-export default function Home() {
+export default async function Home() {
 
-    const [modalOpen, setModalOpen] = useState(false);
-    const [collections, setCollections] = useState<CollectionType[]>([])
+    const session = await auth()
+    if (!session || !session.user?.id) {
+        return { error: 'Unauthorized' };
+    }
 
-    useEffect(() => {
-        async function fetchCollections() {
-            try {
-                const res = await fetch("/api/collections");
-                if (!res.ok) throw new Error("Failed to fetch collections");
-                const data = await res.json();
-                setCollections(data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        fetchCollections();
-    }, []);
-
+    const collections = await db.collection.findMany({
+        where: {
+            userId: session.user.id
+        },
+        include: {links: true}
+    })
 
     return (
         <div>
-            <AddCollectionModal editMode={false} open={modalOpen} onClose={() => { setModalOpen(false) }} />
             <div className="flex flex-col p-4 px-12">
                 <div className="flex justify-between">
                     <div className="text-4xl font-semibold">
                         My Collection
                     </div>
-                    <Button onClick={() => { setModalOpen(true) }}>
-                        Add Collection
-                    </Button>
+                    <AddCollectionClientWrapper />
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
-                    {collections.map((collection, index) => (
-                        <CollectionCardWrapper key={index} id={collection.id} title={collection.title} description={collection.description} links={collection.links} isPublic={collection.isPublic} />
-                    ))}
-                </div>
+                {collections.length === 0 ? (<div>zero</div>) : (
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
+                        {collections.map((collection, index) => (
+                            <CollectionCardWrapper key={index} id={collection.id} title={collection.title} description={collection.description} links={collection.links} isPublic={collection.isPublic} />
+                        ))}
+                    </div>
+                )}
 
             </div>
         </div>

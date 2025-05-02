@@ -3,9 +3,9 @@ import { useRouter } from "next/navigation"
 
 interface CollectionCardWrapperProps {
     id: string,
-    description: string,
+    description: string |null,
     title: string,
-    links: number[],
+    links: { id: string; title: string; collectionId: string; url: string; note: string | null }[],
     isPublic: boolean
 }
 
@@ -29,7 +29,7 @@ export const CollectionCardWrapper = ({
             <div className="p-3">
                 <div className="flex justify-between text-sm font-semibold ">
                     <span className="text-gray-900">{title}</span>
-                    <span className="text-gray-500">{links?.length || 0} Links</span>
+                    <span className="text-gray-500">{links.length} Links</span>
                 </div>
 
                 <div className="mt-2 text-xs font-medium w-fit bg-gray-200 px-2 py-1 text-gray-900 rounded-md">
