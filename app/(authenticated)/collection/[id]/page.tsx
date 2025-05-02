@@ -1,58 +1,26 @@
-"use client"
-import { AddLinkModal } from "@/components/authenticated/add-link-modal"
 import { LinkCardWrapper } from "@/components/authenticated/link-card-wrapper"
-import { Button } from "@/components/ui/button"
-import { Pencil, Plus, Trash2 } from "lucide-react"
-import { useEffect, useState } from "react"
-import { CollectionType } from "../page"
-import { AddCollectionModal } from "@/components/authenticated/add-collection-modal"
-import { DeleteItem } from "@/components/authenticated/delete-item"
+import { db } from "@/lib/db"
+import { ClientCompnentWrapper } from "./ClientComponentWrapper"
 
 interface CollectionProps {
     params: { id: string }
 }
 
-type Link = {
-    id: string,
-    title: string,
-    url: string
-}
 
-export default function Collection({ params }: CollectionProps) {
+export default async function Collection({ params }: CollectionProps) {
 
-    const [linkModalOpen, setLinkModalOpen] = useState(false);
-    const [collectionModalOpen, setCollectionModalOpen] = useState(false);
+    const collection = await db.collection.findUnique({
+        where: { id: params.id },
+        include: { links: true }
+    })
 
-
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-
-    const [links, setLinks] = useState<Link[]>([]);
-    const [collection, setCollection] = useState<CollectionType>();
-
-
-    useEffect(() => {
-        async function fetchLinks() {
-            try {
-                const res = await fetch(`/api/collections/${params.id}`);
-                if (!res.ok) throw new Error("Failed to fetch Links");
-                const data = await res.json();
-                setCollection(data)
-                setLinks(data.links)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        fetchLinks()
-    }, [])
+    const links = collection?.links
 
     return (
         <div>
-            <AddLinkModal id={params.id} open={linkModalOpen} onClose={() => { setLinkModalOpen(false) }} />
-            <AddCollectionModal editMode={true} collection={collection} open={collectionModalOpen} onClose={() => { setCollectionModalOpen(false) }} />
-            <DeleteItem id={params.id} itemType="collection" name={collection?.title} open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false) }} />
             <div className="flex flex-col p-4 px-12">
-                <div className="flex justify-between">
-
+                <div className="flex justify-end">
+                    <ClientCompnentWrapper id={params.id} collection={collection}/>
                 </div>
                 <div className="flex flex-col gap-2 text-left ">
                     <div className="flex flex-col">
@@ -62,19 +30,11 @@ export default function Collection({ params }: CollectionProps) {
                                     {collection?.title}
                                 </h1>
                                 <div className="w-[5rem] flex text-base items-center justify-center">
-                                    {links.length} Links
+                                    {links?.length} Links
                                 </div>
                             </div>
                             <div className="flex gap-2">
-                                <Button onClick={() => { setLinkModalOpen(true) }}>
-                                    <Plus />
-                                </Button>
-                                <Button onClick={() => { setCollectionModalOpen(true) }}>
-                                    <Pencil />
-                                </Button>
-                                <Button onClick={() => { setDeleteModalOpen(true) }}>
-                                    <Trash2 />
-                                </Button>
+                                
                             </div>
                         </div>
                         <div className="flex flex-wrap gap-1">
@@ -87,7 +47,7 @@ export default function Collection({ params }: CollectionProps) {
                     </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
-                    {links.map((link, index) => (
+                    {links?.map((link, index) => (
                         <LinkCardWrapper key={index} id={link.id} title={link.title} url={link.url} />
                     ))}
                 </div>

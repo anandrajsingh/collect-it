@@ -69,7 +69,7 @@ model Link {
   id           String     @id @default(cuid())
   collectionId String
   collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
-  title        String?
+  title        String
   url          String
   note         String?
 }
