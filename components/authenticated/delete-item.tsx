@@ -5,6 +5,7 @@ import { FormSuccess } from "@/components/form-success"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Button } from "../ui/button"
+import { deleteLink } from "@/actions/(authenticated)/link"
 
 interface DeleteItemProps {
     id: string,
@@ -22,7 +23,16 @@ export function DeleteItem({ id,itemType, name, open, onClose }: DeleteItemProps
 
     function handleDelete() {
         if(itemType==="link"){
-            
+            deleteLink(id)
+            .then((data) => {
+                if (data?.error) {
+                    setError(data.error)
+                }
+                if (data?.success) {
+                    setSuccess(data.success)
+                }
+            })
+            .catch(() => setError("Something went wrong")) 
         }else{
             deleteCollection(id)
             .then((data) => {

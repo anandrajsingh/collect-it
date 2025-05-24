@@ -3,6 +3,7 @@ import { Pencil, Trash2 } from "lucide-react"
 import { Button } from "../ui/button"
 import { DeleteItem } from "./delete-item"
 import { useState } from "react"
+import { AddLinkModal } from "./add-link-modal"
 
 interface LinkCardWrapperProps {
     id: string,
@@ -16,6 +17,7 @@ export const LinkCardWrapper = ({
     url
 }: LinkCardWrapperProps) => {
 
+    const [linkModalOpen, setLinkModalOpen] = useState(false)
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
     const handleClick = () => {
@@ -24,6 +26,7 @@ export const LinkCardWrapper = ({
     }
     return (
         <div>
+            <AddLinkModal editMode={true} title={title} url={url} id={id} open={linkModalOpen} onClose={() => { setLinkModalOpen(false) }} />
             <DeleteItem id={id} itemType="link" name={title} open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false) }} />
             <div className="h-[250px] w-[300px] rounded-lg border border-slate-200 bg-white">
                 <div className=" cursor-pointer" onClick={handleClick}>
@@ -40,7 +43,7 @@ export const LinkCardWrapper = ({
                 <div>
                     <div className="h-[1px] w-full bg-slate-400 my" />
                     <div className="flex justify-end">
-                        <Button className="bg-white border-transparent" size="sm" variant="outline" onClick={() => { }}>
+                        <Button className="bg-white border-transparent" size="sm" variant="outline" onClick={() => { setLinkModalOpen(true) }}>
                             <Pencil />
                         </Button>
                         <Button className="bg-white border-transparent" size="sm" variant="outline" onClick={() => { setDeleteModalOpen(true) }}>

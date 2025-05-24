@@ -7,14 +7,6 @@ import { CollectionType } from "../page"
 import { AddCollectionModal } from "@/components/authenticated/add-collection-modal"
 import { DeleteItem } from "@/components/authenticated/delete-item"
 
-// interface CollectionType {
-//     id: string;
-//     title: string;
-//     description: string | null;
-//     isPublic: boolean;
-//     links: any[]; // or specify link structure more precisely if needed
-//   }
-
 interface ClientCompnentProps {
     id: string;
     collection: CollectionType
@@ -27,7 +19,7 @@ export function ClientCompnentWrapper({id, collection}: ClientCompnentProps) {
 
     return (
         < div className="flex gap-4">
-            <AddLinkModal id={id} open={linkModalOpen} onClose={() => { setLinkModalOpen(false) }} />
+            <AddLinkModal editMode={false} id={id} open={linkModalOpen} onClose={() => { setLinkModalOpen(false) }} />
             <AddCollectionModal editMode={true} collection={collection} open={collectionModalOpen} onClose={() => { setCollectionModalOpen(false) }} />
             <DeleteItem id={id} itemType="collection" name={collection?.title} open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false) }} />
             <Button onClick={() => { setLinkModalOpen(true) }}>
